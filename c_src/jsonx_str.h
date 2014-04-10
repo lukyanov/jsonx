@@ -161,7 +161,7 @@ check_with_unescape_jstr(unsigned char *str, unsigned char **endstr, unsigned ch
   for(;;){
     c = *src;
     k = js_map[c];
-    if(!k){ *dst++ = *src++; continue;}
+    if(!k || k == E6){ *dst++ = *src++; continue;}
     if(c == '"'){*endstr = dst;*endptr = src; return 1;}
     switch(k){
     case U2:
@@ -230,7 +230,7 @@ check_noescaped_jstr(unsigned char *str, unsigned char **endptr){
   for(;;){
     c = str[++i];
     k = js_map[c];
-    if(!k){ continue;}
+    if(!k || k == E6){ continue;}
     if(c == '"'){*endptr = str + i; return 1;}
     switch(k){
     case U2:
